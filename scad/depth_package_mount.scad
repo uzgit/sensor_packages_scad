@@ -60,10 +60,10 @@ module bounding_cylinders(bounding_circle_diameter, bounding_circle_offset, boun
 //hole_width = width   - allowance;
 //hole_height = height - allowance;
 
-module contour( contour_width, contour_height, contour_thickness, contour_cutoff_corner_side_length, contour_bounding_circle_diameter, contour_bounding_circle_offset, allowance = 30)
+module contour( contour_width, contour_height, contour_thickness, contour_cutoff_corner_side_length, contour_bounding_circle_diameter, contour_bounding_circle_offset, allowance = 30, hole_width=150, hole_height=90)
 {
-    hole_width  = contour_width  - allowance;
-    hole_height = contour_height - allowance;
+//    hole_width  = contour_width  - allowance;
+//    hole_height = contour_height - allowance;
     
     difference()
     {
@@ -97,11 +97,17 @@ module camera_support(support_width, support_height, support_thickness, camera_b
             
             translate([-10/2, -support_height/2, 0])
             cube([10, support_height, support_thickness]);
+            
+            
         }
         union()
         {
+            // relief
             translate([-camera_width/2, -camera_height/2, camera_base_height])
             cube([camera_width, camera_height, support_thickness - camera_base_height]);
+            
+            translate([-55, -20, camera_base_height])
+            cube([30, 20, support_thickness - camera_base_height]);
         }
     }
 }
@@ -155,7 +161,7 @@ difference()
     // negatives
     union()
     {
-        translate([12, -2, 10])
+        translate([3, -3, 10])
         piHolesWood("3B", 10, true);
         
         camera_holes(camera_base_height);
